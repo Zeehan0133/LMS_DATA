@@ -32,3 +32,9 @@ select user_details.id,user_roles.user_id
 SELECT s1.id, s2.first_name
     from user_details s1, user_details s2
   where s1.id <> s2.first_name;
+
+
+-- self join  
+SELECT s1.id, s2.first_name
+    from user_details s1, user_details s2
+  where s1.id = s2.id;
