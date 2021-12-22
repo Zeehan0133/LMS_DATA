@@ -15,6 +15,20 @@ DROP PROCEDURE IF EXISTS spIUD;
 
 
 
+-- savepoint .........
+START TRANSACTION;
+
+SELECT * FROM user_roles;
+UPDATE user_roles SET  role_name='engg' where user_id=10;
+INSERT INTO user_roles values (30, 'Mohan');
+
+SAVEPOINT samplesavepoint;
+
+DELETE FROM user_roles WHERE user_id=10;
+
+ROLLBACK TO SAVEPOINT samplesavepoint;
+COMMIT;
+
 
 
 
