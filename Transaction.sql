@@ -13,27 +13,19 @@ DROP PROCEDURE IF EXISTS spIUD;
   ROLLBACK;
   END //
 
-
-
 -- savepoint .........
 START TRANSACTION;
 
-SELECT * FROM user_roles;
-UPDATE user_roles SET  role_name='engg' where user_id=10;
-INSERT INTO user_roles values (30, 'Mohan');
+SELECT * FROM lab;
+UPDATE user_roles SET id=111 where name='piyush';
+INSERT INTO lab (30, 'nida','bhopal','bhopal');
 
 SAVEPOINT samplesavepoint;
 
-DELETE FROM user_roles WHERE user_id=10;
+DELETE FROM id=30 WHERE name='piyush';
 
 ROLLBACK TO SAVEPOINT samplesavepoint;
 COMMIT;
-
-
-
-
-
-
 
 -- ROLLBACK...........
 DROP PROCEDURE IF EXISTS TRANSACTION_COMMIT;
@@ -49,7 +41,7 @@ DELIMITER //
      ROLLBACK;
      END;
      START TRANSACTION;
-     DELETE FROM user_roles;
+     DELETE FROM mentor ;
      SELECT * FROM student2;
      ROLLBACK;
      END //
@@ -69,7 +61,7 @@ DELIMITER //
      ROLLBACK;
      END;
      START TRANSACTION;
-     DELETE FROM user_roles;
+     DELETE FROM hired_candidates;
      SELECT * FROM student2;
      ROLLBACK;
      END //
