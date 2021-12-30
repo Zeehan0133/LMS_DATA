@@ -1,5 +1,5 @@
 -- PARTITION BY RANGE...................................................................
-DROP TABLE IF EXISTS `candidate_personal_det_check`;
+DROP TABLE IF EXISTS candidate_personal_det_check;
 CREATE TABLE candidate_personal_det_check (
   id int NOT NULL,
   candidate_id int NOT NULL,
@@ -35,8 +35,8 @@ CREATE TABLE candidate_personal_det_check (
 4 rows in set (0.01 sec)
 
 -- PARTITION BY LIST..................
-DROP TABLE IF EXISTS `company`;
-CREATE TABLE `company` (
+DROP TABLE IF EXISTS company;
+CREATE TABLE company (
   id int NOT NULL,
   name varchar(50) NOT NULL,
   address varchar(200) DEFAULT NULL,
