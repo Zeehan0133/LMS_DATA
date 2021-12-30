@@ -166,3 +166,73 @@ SELECT TABLE_NAME,PARTITION_NAME,TABLE_ROWS
 | user_roles | p3             |          3 |
 +------------+----------------+------------+
 3 rows in set (0.01 sec)
+
+
+--  PARTITION BY LIST COLUMNS.............
+DROP TABLE IF EXISTS tech_type;
+CREATE TABLE tech_type (
+  id int NOT NULL,
+  type_name varchar(20) NOT NULL,
+  cur_status int DEFAULT 0,
+  creator_stamp datetime DEFAULT NULL,
+  creator_user int DEFAULT NULL
+ ) 
+PARTITION BY LIST COLUMNS(id) (   
+PARTITION pN VALUES IN(101),   
+PARTITION pT VALUES IN(102),   
+PARTITION pC VALUES IN (103)); 
+
+-- SHOW PARTITION.......
+select TABLE_NAME,PARTITION_NAME,TABLE_ROWS
+FROM INFORMATION_SCHEMA.PARTITIONS
+WHERE TABLE_SCHEMA = 'lms_partition' AND TABLE_NAME = 'tech_type';
+
+-- OUTPUT....
++------------+----------------+------------+
+| TABLE_NAME | PARTITION_NAME | TABLE_ROWS |
++------------+----------------+------------+
+| tech_type  | pC             |          0 |
+| tech_type  | pN             |          0 |
+| tech_type  | pT             |          0 |
++------------+----------------+------------+
+3 rows in set (0.01 sec)
+
+-- SUBPARTITION...........
+CREATE TABLE app_parameter (
+  id int NOT NULL,
+  key_type varchar(20) NOT NULL,
+  key_value varchar(20) NOT NULL,
+  key_text varchar(100) DEFAULT NULL,
+  cur_status char(5) DEFAULT NULL,
+  lastupd_user int DEFAULT NULL,
+  lastupd_stamp datetime DEFAULT NULL,
+  creator_stamp datetime DEFAULT NULL,
+  creator_user int DEFAULT NULL,
+  seq_num int DEFAULT NULL
+)
+PARTITION BY RANGE( id )  
+    SUBPARTITION BY HASH( creator_user )  
+    SUBPARTITIONS 2 (  
+        PARTITION p0 VALUES LESS THAN (111),  
+        PARTITION p1 VALUES LESS THAN (121),  
+        PARTITION p2 VALUES LESS THAN MAXVALUE  
+    ); 
+
+-- SHOW PARTITION...
+SELECT TABLE_NAME,PARTITION_NAME,TABLE_ROWS
+FROM INFORMATION_SCHEMA.PARTITIONS
+WHERE TABLE_SCHEMA = 'lms_partition' AND TABLE_NAME = 'app_parameter';
+
+-- OUTPUT.....................
++---------------+----------------+------------+
+| TABLE_NAME    | PARTITION_NAME | TABLE_ROWS |
++---------------+----------------+------------+
+| app_parameter | p0             |          0 |
+| app_parameter | p0             |          0 |
+| app_parameter | p1             |          0 |
+| app_parameter | p1             |          0 |
+| app_parameter | p2             |          4 |
+| app_parameter | p2             |          5 |
++---------------+----------------+------------+
+6 rows in set (0.01 sec)
+ 
