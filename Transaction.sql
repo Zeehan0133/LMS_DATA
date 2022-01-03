@@ -16,13 +16,13 @@ DROP PROCEDURE IF EXISTS spIUD;
 -- savepoint .........
 START TRANSACTION;
 
-SELECT * FROM lab;
-UPDATE user_roles SET id=111 where name='piyush';
-INSERT INTO lab (30, 'nida','bhopal','bhopal');
+SELECT * FROM mentor;
+UPDATE mentor SET id=111 where name='piyush';
+INSERT INTO mentor values (32, 'aman','a',1,1,null,1);
 
 SAVEPOINT samplesavepoint;
 
-DELETE FROM id=30 WHERE name='piyush';
+DELETE FROM mentor where id=32; 
 
 ROLLBACK TO SAVEPOINT samplesavepoint;
 COMMIT;
